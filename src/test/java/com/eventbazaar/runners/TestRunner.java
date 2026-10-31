@@ -7,7 +7,9 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
     features = "src/test/resources/features",
-    glue = {"com.eventbazaar.stepdefinitions", "com.eventbazaar.hooks"}
+    glue = {"com.eventbazaar.stepdefinitions", "com.eventbazaar.hooks"},
+    tags = "@signup", // <-- ADD THIS LINE TO RUN ONLY SIGNUP
+    plugin = {"pretty", "html:target/cucumber-reports.html"}
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
 
