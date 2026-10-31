@@ -1,32 +1,44 @@
+
 package com.eventbazaar.utils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 
 public class DriverFactory {
-	
-	  private static WebDriver driver;
-	  public static void initializeDriver() {
+    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-	        WebDriverManager.chromedriver().setup();
+    public static WebDriver getDriver() {
+        return driver.get();
+    }
 
-	        driver = new ChromeDriver();
+    public static void initDriver(String browser) {
+        if (browser == null) {
+            throw new IllegalStateException("<parameter name=\"browser\"> is missing in testng.xml");
+        }
 
-	        driver.manage().window().maximize();
-	    }
+        WebDriver webDriver;
+        if ("chrome".equalsIgnoreCase(browser)) {
+            webDriver = new ChromeDriver(); // Added Chrome
+        } else if ("firefox".equalsIgnoreCase(browser)) {
+            webDriver = new FirefoxDriver();
+        } else if ("edge".equalsIgnoreCase(browser)) {
+            webDriver = new EdgeDriver();
+        } else {
+            throw new IllegalArgumentException("Unsupported browser: " + browser);
+        }
+        
+        // Optional: Maximize window for better visibility
+        webDriver.manage().window().maximize();
+        
+        driver.set(webDriver);
+    }
 
-	    public static WebDriver getDriver() {
-	        return driver;
-	    }
-	    
-	    public static void closeDriver() {
-
-	        if (driver != null) {
-	            driver.quit();
-	            driver = null;
-	        }
-	    }
-
+    public static void quitDriver() {
+        if (driver.get() != null) {
+            driver.get().quit();
+            driver.remove(); 
+        }
+    }
 }
