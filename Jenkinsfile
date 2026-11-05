@@ -10,8 +10,9 @@ pipeline {
         
         stage('Run Tests') {
             steps {
-                // Assumes mvn is installed on the server's PATH
-                sh 'mvn clean test'
+                // Changed from 'sh' to 'bat' for Windows
+                // 'call mvn' ensures the script waits for Maven to finish
+                bat 'call mvn clean test'
             }
         }
     }
