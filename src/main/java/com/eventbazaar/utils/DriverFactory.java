@@ -13,7 +13,7 @@ public class DriverFactory {
         return driver.get();
     }
 
-    public static void initDriver(String browser) {
+    public static WebDriver initDriver(String browser) {
         if (browser == null) {
             throw new IllegalStateException("<parameter name=\"browser\"> is missing in testng.xml");
         }
@@ -33,6 +33,7 @@ public class DriverFactory {
         webDriver.manage().window().maximize();
         
         driver.set(webDriver);
+		return webDriver;
     }
 
     public static void quitDriver() {
