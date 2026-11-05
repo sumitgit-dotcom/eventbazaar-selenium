@@ -10,14 +10,14 @@ pipeline {
         
         stage('Run Tests') {
             steps {
+                // Notice the extra quotes around the JAVA_HOME path
                 bat '''
-                    set JAVA_HOME=C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.12.101-hotspot
-                    set PATH=%JAVA_HOME%\\bin;%PATH%
+                    set "JAVA_HOME=C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.12.101-hotspot"
+                    set "PATH=%JAVA_HOME%\\bin;%PATH%"
                     call mvn clean test
                 '''
             }
         }
-    }
     
     post {
         always {
