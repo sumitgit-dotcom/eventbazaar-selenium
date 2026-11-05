@@ -10,8 +10,11 @@ pipeline {
         
         stage('Run Tests') {
             steps {
-                // Since JAVA_HOME is now set in Windows, we can just call Maven normally
-                bat 'call mvn clean test'
+                bat '''
+                    set "JAVA_HOME=C:\\Users\\admin\\AppData\\Local\\Programs\\Eclipse Adoptium\\jdk-21.0.12.101-hotspot"
+                    set "PATH=%JAVA_HOME%\\bin;%PATH%"
+                    call mvn clean test
+                '''
             }
         }
     }
