@@ -10,9 +10,11 @@ pipeline {
         
         stage('Run Tests') {
             steps {
-                // Changed from 'sh' to 'bat' for Windows
-                // 'call mvn' ensures the script waits for Maven to finish
-                bat 'call mvn clean test'
+                bat '''
+                    set JAVA_HOME=C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.12.101-hotspot
+                    set PATH=%JAVA_HOME%\\bin;%PATH%
+                    call mvn clean test
+                '''
             }
         }
     }
