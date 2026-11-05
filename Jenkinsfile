@@ -13,7 +13,9 @@ pipeline {
                 bat '''
                     set "JAVA_HOME=C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.12.101-hotspot"
                     set "PATH=%JAVA_HOME%\\bin;%PATH%"
-                    call mvn clean test
+                    where java
+                    java -version
+                    call mvn clean test -Dmaven.compiler.fork=true -Dmaven.compiler.executable="C:\\Program Files\\Eclipse Adoptium\\jdk-21.0.12.101-hotspot\\bin\\javac.exe"
                 '''
             }
         }
